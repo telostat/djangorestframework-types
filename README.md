@@ -1,43 +1,22 @@
-<img src="http://mypy-lang.org/static/mypy_light.svg" alt="mypy logo" width="300px"/>
+# djangorestframework-types [![PyPI](https://img.shields.io/pypi/v/djangorestframework-types.svg)](https://pypi.org/project/djangorestframework-types/)
 
-# pep484 stubs for Django REST framework
+Type stubs for [Django Rest Framework](https://www.django-rest-framework.org).
 
-[![Build Status](https://travis-ci.com/typeddjango/djangorestframework-stubs.svg?branch=master)](https://travis-ci.com/typeddjango/djangorestframework-stubs)
-[![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
-[![Gitter](https://badges.gitter.im/mypy-django/Lobby.svg)](https://gitter.im/mypy-django/Lobby)
+> Note: this project was forked from
+> <https://github.com/typeddjango/djangorestframework-stubs> with the goal of
+> removing the [`mypy`](https://github.com/python/mypy) plugin dependency so
+> that `mypy` can't [crash due to Django
+> config](https://github.com/typeddjango/django-stubs/issues/318), and that
+> non-`mypy` type checkers like
+> [`pyright`](https://github.com/microsoft/pyright) will work better with
+> Django Rest Framework.
 
-
-Mypy stubs for [DRF 3.12.x](https://pypi.org/project/djangorestframework/).
-Supports Python 3.6, 3.7, 3.8 and 3.9.
-
-## Installation
+## install
 
 ```bash
-pip install djangorestframework-stubs
+pip install djangorestframework-types
 ```
 
-To make mypy aware of the plugin, you need to add
+## related
 
-```ini
-[mypy]
-plugins =
-    mypy_drf_plugin.main
-```
-
-in your `mypy.ini` file.
-
-
-## To get help
-
-We have Gitter here: <https://gitter.im/mypy-django/Lobby>
-If you think you have more generic typing issue, please refer to <https://github.com/python/mypy> and their Gitter.
-
-## Contributing
-
-This project is open source and community driven. As such we encourage contributions big and small. You can contribute by doing any of the following:
-
-1. Contribute code (e.g. improve stubs, add plugin capabilities, write tests etc) - to do so please follow the [contribution guide](./CONTRIBUTING.md).
-2. Assist in code reviews and discussions in issues.
-3. Identify bugs and issues and report these
-
-You can always also reach out in gitter to discuss your contributions!
+- <https://github.com/sbdchd/django-types>
