@@ -30,9 +30,8 @@ from django.core.files.base import File
 from django.db import models
 from django.db.models import Model
 from django.forms import ImageField as DjangoImageField  # noqa: F401
-from typing_extensions import Literal, Final
-
 from rest_framework.serializers import BaseSerializer
+from typing_extensions import Final, Literal
 
 class _Empty(Enum):
     sentinel = 0
@@ -364,8 +363,8 @@ class IntegerField(Field[int, Union[float, int, str], int, Any]):
     def __init__(
         self,
         *,
-        max_value: int = ...,
-        min_value: int = ...,
+        max_value: Optional[int] = ...,
+        min_value: Optional[int] = ...,
         read_only: bool = ...,
         write_only: bool = ...,
         required: bool = ...,
@@ -580,8 +579,12 @@ class MultipleChoiceField(
         read_only: bool = ...,
         write_only: bool = ...,
         required: bool = ...,
-        default: Union[_Empty, Sequence[str], Sequence[int], Callable[[], Sequence[str]], Callable[[], Sequence[int]]] = ...,
-        initial: Union[_Empty, Sequence[str], Sequence[int], Callable[[], Sequence[str]], Callable[[], Sequence[int]]] = ...,
+        default: Union[
+            _Empty, Sequence[str], Sequence[int], Callable[[], Sequence[str]], Callable[[], Sequence[int]]
+        ] = ...,
+        initial: Union[
+            _Empty, Sequence[str], Sequence[int], Callable[[], Sequence[str]], Callable[[], Sequence[int]]
+        ] = ...,
         source: str = ...,
         label: str = ...,
         help_text: str = ...,

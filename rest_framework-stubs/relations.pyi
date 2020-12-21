@@ -24,18 +24,16 @@ class PKOnlyObject:
 MANY_RELATION_KWARGS: Sequence[str]
 
 _MT = TypeVar("_MT", bound=Model)
-_DT = TypeVar("_DT")  # Data Type
-_PT = TypeVar("_PT")  # Primitive Type
 
-class RelatedField(Generic[_MT, _DT, _PT], Field[_MT, _DT, _PT, Any]):
-    queryset: Optional[Union[QuerySet[_MT], Manager[_MT]]] = ...
+class RelatedField(Field[Any, Any, Any, Any]):
+    queryset: Optional[Union[QuerySet[Any], Manager[Any]]] = ...
     html_cutoff: Optional[int] = ...
     html_cutoff_text: Optional[str] = ...
     def __init__(
         self,
         many: bool = ...,
         allow_empty: bool = ...,
-        queryset: Optional[Union[QuerySet[_MT], Manager[_MT]]] = ...,
+        queryset: Optional[Union[QuerySet[Any], Manager[Any]]] = ...,
         html_cutoff: Optional[int] = ...,
         html_cutoff_text: str = ...,
         read_only: bool = ...,
@@ -52,10 +50,12 @@ class RelatedField(Generic[_MT, _DT, _PT], Field[_MT, _DT, _PT, Any]):
         style: Optional[Dict[str, str]] = ...,
     ): ...
     # mypy doesn't accept the typing below, although its accurate to what this class is doing, hence the ignore
-    def __new__(cls, *args: Any, **kwargs: Any) -> Union[RelatedField[_MT, _DT, _PT], ManyRelatedField]: ...  # type: ignore
+    def __new__(
+        cls, *args: Any, **kwargs: Any
+    ) -> Union[RelatedField, ManyRelatedField]: ...  # type: ignore
     @classmethod
     def many_init(cls, *args: Any, **kwargs: Any) -> ManyRelatedField: ...
-    def get_queryset(self) -> QuerySet[_MT]: ...
+    def get_queryset(self) -> QuerySet[Any]: ...
     def use_pk_only_optimization(self) -> bool: ...
     def get_choices(self, cutoff: Optional[int] = ...) -> OrderedDict: ...
     @property
@@ -63,12 +63,12 @@ class RelatedField(Generic[_MT, _DT, _PT], Field[_MT, _DT, _PT, Any]):
     @property
     def grouped_choices(self) -> OrderedDict: ...
     def iter_options(self) -> Iterable[Option]: ...
-    def get_attribute(self, instance: _MT) -> Optional[_PT]: ...  # type: ignore[override]
-    def display_value(self, instance: _MT) -> str: ...
+    def get_attribute(self, instance: Any) -> Optional[Any]: ...  # type: ignore[override]
+    def display_value(self, instance: Any) -> str: ...
 
-class StringRelatedField(RelatedField[_MT, _MT, str]): ...
+class StringRelatedField(RelatedField): ...
 
-class PrimaryKeyRelatedField(RelatedField[_MT, _MT, Any]):
+class PrimaryKeyRelatedField(RelatedField):
     pk_field: Optional[str] = ...
     def __init__(
         self,
@@ -92,7 +92,7 @@ class PrimaryKeyRelatedField(RelatedField[_MT, _MT, Any]):
         pk_field: Optional[Union[str, Field]] = ...,
     ): ...
 
-class HyperlinkedRelatedField(RelatedField[_MT, str, Hyperlink]):
+class HyperlinkedRelatedField(RelatedField):
     reverse: Callable = ...
     lookup_field: str = ...
     lookup_url_kwarg: str = ...
@@ -127,7 +127,7 @@ class HyperlinkedRelatedField(RelatedField[_MT, str, Hyperlink]):
 
 class HyperlinkedIdentityField(HyperlinkedRelatedField): ...
 
-class SlugRelatedField(RelatedField[_MT, str, str]):
+class SlugRelatedField(RelatedField):
     slug_field: Optional[str] = ...
     def __init__(
         self,
@@ -139,7 +139,7 @@ class SlugRelatedField(RelatedField[_MT, str, str]):
         read_only: bool = ...,
         write_only: bool = ...,
         required: bool = ...,
-        default: _DT = ...,
+        default: Any = ...,
         initial: Union[_MT, Callable[[Any], _MT]] = ...,
         source: Union[Callable, str] = ...,
         label: Optional[str] = ...,
