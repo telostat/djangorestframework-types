@@ -1,13 +1,16 @@
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple, TypeVar
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple, TypeVar, Union
 
 from django.db.models import Model, QuerySet
+from mongoengine import MongoQuerySet
 from rest_framework.request import Request
 from rest_framework.views import APIView
 
 _MT = TypeVar("_MT", bound=Model)
 
+_Q = TypeVar("_Q", bound=Union[QuerySet[Any], MongoQuerySet[Any]])
+
 class BaseFilterBackend:
-    def filter_queryset(self, request: Request, queryset: QuerySet[_MT], view: APIView) -> QuerySet[_MT]: ...
+    def filter_queryset(self, request: Request, queryset: _Q, view: APIView) -> _Q: ...
     def get_schema_fields(self, view: APIView) -> List[Any]: ...
     def get_schema_operation_parameters(self, view: APIView): ...
 

@@ -26,12 +26,13 @@ from typing import (
     Union,
 )
 
+from typing_extensions import Final, Literal
+
 from django.core.files.base import File
 from django.db import models
 from django.db.models import Model
 from django.forms import ImageField as DjangoImageField  # noqa: F401
 from rest_framework.serializers import BaseSerializer
-from typing_extensions import Final, Literal
 
 class _Empty(Enum):
     sentinel = 0
@@ -96,11 +97,13 @@ class Field(Generic[_VT, _DT, _RP, _IN]):
     field_name: Optional[str] = ...
     help_text: Optional[str] = ...
     initial: Optional[Union[_VT, Callable[[], _VT]]] = ...
-    label: Optional[str]
+    # NOTE(sbdchd): I made some of these Any so that when declaring a field on
+    # a serializer with the same name we don't get a type error.
+    label: Any
     parent: BaseSerializer
     read_only: bool
-    required: bool
-    source: Optional[Union[Callable, str]]
+    required: Any
+    source: Any
     source_attrs: List[str] = ...
     style: Dict[str, Any]
     write_only: bool

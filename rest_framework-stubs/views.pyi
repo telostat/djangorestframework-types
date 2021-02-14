@@ -1,6 +1,9 @@
 from typing import Any, Callable, Dict, List, Mapping, NoReturn, Optional, Sequence, Tuple, Type
 
+from typing_extensions import Literal
+
 from django.http import HttpRequest
+from django.http.response import HttpResponse, HttpResponseBase
 from django.views.generic import View
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.negotiation import BaseContentNegotiation
@@ -18,12 +21,6 @@ def get_view_name(view: APIView) -> str: ...
 def get_view_description(view: APIView, html: bool = ...) -> str: ...
 def set_rollback() -> None: ...
 def exception_handler(exc: Exception, context) -> Optional[Response]: ...
-
-class AsView(Response):
-    self: APIView
-    view_class: Type[APIView]
-    view_initkwargs: Mapping[str, Any]
-    def __call__(self, *args, **kwargs): ...
 
 class APIView(View):
     args: Any = ...
@@ -47,7 +44,7 @@ class APIView(View):
     @property
     def default_response_headers(self) -> Dict[str, str]: ...
     @classmethod
-    def as_view(cls, **initkwargs: Any) -> AsView: ...
+    def as_view(cls, **initkwargs: Any) -> Callable[..., HttpResponse]: ...
     def http_method_not_allowed(
         self, request: Request, *args: Any, **kwargs: Any
     ) -> Response: ...  # type: ignore[override]

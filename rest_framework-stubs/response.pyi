@@ -1,14 +1,13 @@
 from typing import Any, Dict, List, Mapping, Optional, Union
 
 from django.template.response import SimpleTemplateResponse
-
 from rest_framework.request import Request
 
 class Response(SimpleTemplateResponse):
-    data: Optional[Union[List[Dict[str, Any]], Dict[str, Any]]] = ...
+    data: Any
     exception: bool = ...
     content_type: Optional[str] = ...
-    _request: Request
+    _headers: Dict[str, Any]
     def __init__(
         self,
         data: Any = ...,

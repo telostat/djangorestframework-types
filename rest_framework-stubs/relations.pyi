@@ -50,9 +50,7 @@ class RelatedField(Field[Any, Any, Any, Any]):
         style: Optional[Dict[str, str]] = ...,
     ): ...
     # mypy doesn't accept the typing below, although its accurate to what this class is doing, hence the ignore
-    def __new__(
-        cls, *args: Any, **kwargs: Any
-    ) -> Union[RelatedField, ManyRelatedField]: ...  # type: ignore
+    def __new__(cls, *args: Any, **kwargs: Any) -> Union[RelatedField, ManyRelatedField]: ...  # type: ignore
     @classmethod
     def many_init(cls, *args: Any, **kwargs: Any) -> ManyRelatedField: ...
     def get_queryset(self) -> QuerySet[Any]: ...
