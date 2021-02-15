@@ -11,11 +11,10 @@ else
     ./.venv/bin/isort -y
 fi
 
-./node_modules/.bin/pyright .
+./node_modules/.bin/pyright tests typings
 
 # type check code
-./.venv/bin/mypy tests
+./.venv/bin/mypy tests typings
 
 # lint
-./.venv/bin/flake8 tests
-
+./.venv/bin/flake8 tests typings

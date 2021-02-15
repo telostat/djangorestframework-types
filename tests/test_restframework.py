@@ -1,6 +1,10 @@
-from restframework.request import Request
+from rest_framework import status
+from rest_framework.test import APIClient
 
 
 def test_restframework_types() -> None:
-    req = Request()
-    print(req)
+    client = APIClient()
+    res = client.get("/api/v1/foo")
+    assert res.status_code == status.HTTP_200_OK
+    print(res.data)
+    assert res.json() == {"test": "foo"}
