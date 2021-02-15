@@ -11,6 +11,8 @@ packages = [
   { include = "rest_framework-stubs" },
   { include = "coreapi-stubs" },
   { include = "coreschema-stubs" },
+  { include = "rest_framework_swagger-stubs" },
+  { include = "openapi_codec-stubs" },
 ]
 
 [tool.poetry.dependencies]
