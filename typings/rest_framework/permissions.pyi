@@ -2,14 +2,13 @@ from typing import Any, Dict, List, Protocol, Sequence, Type, Union
 
 from django.db.models import Model, QuerySet
 
-from rest_framework.request import Request
 from rest_framework.views import APIView
 
 SAFE_METHODS: Sequence[str]
 
 class _SupportsHasPermission(Protocol):
-    def has_permission(self, request: Request, view: APIView) -> bool: ...
-    def has_object_permission(self, request: Request, view: APIView, obj: Any) -> bool: ...
+    def has_permission(self, request: Any, view: APIView) -> bool: ...
+    def has_object_permission(self, request: Any, view: APIView, obj: Any) -> bool: ...
 
 _PermissionClass = Union[Type[BasePermission], OperandHolder, SingleOperandHolder]
 
