@@ -1,25 +1,37 @@
 from contextlib import contextmanager
 from types import TracebackType
-from typing import Any, BinaryIO, ContextManager, Dict, Iterator, List, Mapping, Optional, Sequence, Tuple, Type, Union
+from typing import (
+    Any,
+    BinaryIO,
+    ContextManager,
+    Dict,
+    Iterator,
+    List,
+    Mapping,
+    NoReturn,
+    Optional,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+)
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
-from django.http import HttpRequest, QueryDict
-
 from django.contrib.sessions.backends.base import SessionBase
 from django.contrib.sites.models import Site
+from django.core.files import uploadedfile, uploadhandler
+from django.http import HttpRequest, QueryDict
+from django.http.request import HttpHeaders
 from django.urls import ResolverMatch
+from django.utils.datastructures import ImmutableList, MultiValueDict
+
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.authtoken.models import Token
-
 from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework.parsers import BaseParser
 from rest_framework.versioning import BaseVersioning
 from rest_framework.views import APIView
-from django.utils.datastructures import MultiValueDict
-from django.core.files import uploadedfile, uploadhandler
-from django.utils.datastructures import ImmutableList, MultiValueDict
-from django.http.request import HttpHeaders
 
 _UploadHandlerList = Union[List[uploadhandler.FileUploadHandler], ImmutableList[uploadhandler.FileUploadHandler]]
 
@@ -63,17 +75,13 @@ class Request(HttpRequest):
     versioning_scheme: Optional[BaseVersioning]
     _request: HttpRequest
     GET: QueryDict = ...
-    POST: QueryDict = ...
     COOKIES: Dict[str, str] = ...
     META: Dict[str, Any] = ...
-    FILES: MultiValueDict[str, uploadedfile.UploadedFile] = ...
     path: str = ...
     path_info: str = ...
     method: Optional[str] = ...
     resolver_match: ResolverMatch = ...
-    content_type: Optional[str] = ...
     content_params: Optional[Dict[str, str]] = ...
-    user: Union[AbstractBaseUser, AnonymousUser]
     site: Site
     session: SessionBase
     encoding: Optional[str] = ...
@@ -129,7 +137,7 @@ class Request(HttpRequest):
     @property
     def POST(self) -> QueryDict: ...  # type: ignore[override]
     @property
-    def FILES(self) -> Any: ...  # type: ignore [override]
+    def FILES(self) -> MultiValueDict[str, uploadedfile.UploadedFile]: ...  # type: ignore [override]
     @property
-    def QUERY_PARAMS(self) -> None: ...
+    def QUERY_PARAMS(self) -> NoReturn: ...
     def force_plaintext_errors(self, value: Any) -> None: ...
