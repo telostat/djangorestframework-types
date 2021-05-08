@@ -114,7 +114,7 @@ class APIRequestFactory(DjangoRequestFactory):
         self,
         method: str,
         path: str,
-        data: str = ...,
+        data: _RequestData = ...,
         content_type: str = ...,
         secure: bool = ...,
         *,
