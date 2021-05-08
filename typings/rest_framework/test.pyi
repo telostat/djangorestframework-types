@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Mapping, Optional, Union
 
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import AnonymousUser
@@ -42,6 +42,8 @@ class CoreAPIClient(coreapi.Client):
     @property
     def session(self) -> Any: ...
 
+_RequestData = Optional[Any]
+
 class APIRequestFactory(DjangoRequestFactory):
     renderer_classes_list: Any = ...
     default_format: Any = ...
@@ -50,55 +52,74 @@ class APIRequestFactory(DjangoRequestFactory):
     def __init__(self, enforce_csrf_checks: bool = ..., **defaults: Any) -> None: ...
     def request(self, **kwargs: Any) -> Request: ...  # type: ignore[override]
     def get(  # type: ignore [override]
-        self, path: str, data: Optional[Union[Dict[str, Any], str]] = ..., follow: bool = ..., **extra: Any
+        self,
+        path: str,
+        data: Optional[Union[Mapping[str, Any], str]] = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def post(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
-        follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def put(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
-        follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def patch(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
-        follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def delete(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
-        follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def options(  # type: ignore [override]
         self,
         path: str,
-        data: Union[Dict[str, str], str] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[Any] = ...,
-        follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
     def generic(  # type: ignore[override]
-        self, method: str, path: str, data: str = ..., content_type: str = ..., secure: bool = ..., **extra: Any
+        self,
+        method: str,
+        path: str,
+        data: _RequestData = ...,
+        content_type: str = ...,
+        secure: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Request: ...
 
 class ForceAuthClientHandler(ClientHandler):
@@ -111,52 +132,68 @@ class APIClient(APIRequestFactory, DjangoClient):
     def force_authenticate(self, user: Optional[Any] = ..., token: Optional[Token] = ...) -> None: ...
     def request(self, **kwargs: Any) -> Response: ...  # type: ignore[override]
     def get(  # type: ignore [override]
-        self, path: str, data: Optional[Union[Dict[str, Any], str]] = ..., follow: bool = ..., **extra: Any
+        self,
+        path: str,
+        data: Optional[Union[Dict[str, Any], str]] = ...,
+        follow: bool = ...,
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def post(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
         follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def put(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
         follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def patch(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
         follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def delete(  # type: ignore [override]
         self,
         path: str,
-        data: Optional[Any] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
         content_type: Optional[str] = ...,
         follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def options(  # type: ignore [override]
         self,
         path: str,
-        data: Union[Dict[str, str], str] = ...,
+        data: _RequestData = ...,
         format: Optional[str] = ...,
-        content_type: Optional[Any] = ...,
+        content_type: Optional[str] = ...,
         follow: bool = ...,
-        **extra: Any
+        *,
+        QUERY_STRING: str = ...,
+        **extra: str
     ) -> Response: ...
     def logout(self) -> None: ...
 
