@@ -3,13 +3,13 @@ from typing import Any, Dict, Mapping, Optional
 from django.template.response import SimpleTemplateResponse
 
 class Response(SimpleTemplateResponse):
-    data: Any
+    data: object
     exception: bool = ...
     content_type: Optional[str] = ...
-    _headers: Dict[str, Any]
+    _headers: Dict[str, tuple[str, str]]
     def __init__(
         self,
-        data: Any = ...,
+        data: object = ...,
         status: Optional[int] = ...,
         template_name: Optional[str] = ...,
         headers: Optional[Mapping[str, str]] = ...,
